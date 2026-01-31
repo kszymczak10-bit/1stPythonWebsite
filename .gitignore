@@ -1,0 +1,12 @@
+# Virtualenv
+.venv/
+
+# Baza danych
+**/app.db
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc

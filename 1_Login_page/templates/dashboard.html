@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Felgi{% endblock %}
+
+{% block content %}
+  <h1 class="mb-3">Felgi</h1>
+
+  {% if error %}
+    <div class="alert alert-danger">
+      {{ error }}
+    </div>
+  {% endif %}
+
+
+<form class="row g-2 mb-4" method="get" action="{{ url_for('dashboard') }}">
+  <div class="col-md-3">
+    <label class="form-label">Marka</label>
+    <input class="form-control" type="text" name="brand" placeholder="np. BBS"
+           value="{{ brand or '' }}">
+  </div>
+
+  <div class="col-md-3">
+    <label class="form-label">PCD</label>
+    <input class="form-control" type="text" name="pcd" placeholder="np. 5x112"
+           value="{{ pcd or '' }}">
+  </div>
+
+  <div class="col-md-2">
+    <label class="form-label">Średnica</label>
+    <input class="form-control" type="number" name="diameter" placeholder="np. 18"
+           value="{{ diameter or '' }}">
+  </div>
+
+  <div class="col-md-2">
+    <label class="form-label">Sortuj po</label>
+    <select class="form-select" name="sort">
+      <option value="" {% if not sort_by %}selected{% endif %}>Brak</option>
+      <option value="brand" {% if sort_by == "brand" %}selected{% endif %}>Marka</option>
+      <option value="diameter" {% if sort_by == "diameter" %}selected{% endif %}>Średnica</option>
+      <option value="width" {% if sort_by == "width" %}selected{% endif %}>Szerokość</option>
+    </select>
+  </div>
+
+  <div class="col-md-2 d-flex align-items-end gap-2">
+    <button class="btn btn-primary" type="submit">Szukaj</button>
+    <a class="btn btn-outline-secondary" href="{{ url_for('dashboard') }}">Wyczyść</a>
+  </div>
+</form>
+
+
+
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Marka</th>
+        <th>Średnica</th>
+        <th>Szerokość</th>
+        <th>PCD</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for w in wheels %}
+        <tr>
+            <td>{{ w.brand }}</td>
+            <td>{{ w.diameter }}"</td>
+            <td>{{ w.width }}</td>
+            <td>{{ w.pcd }}</td>
+
+        </tr>
+      {% else %}
+        <tr>
+          <td colspan="4" class="text-center text-muted">Brak wyników</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+
+
